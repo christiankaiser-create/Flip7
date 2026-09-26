@@ -1,0 +1,16 @@
+{
+  "name": "Flip 7 Zähler",
+  "short_name": "Flip 7",
+  "description": "Punkte-Zähler für Flip 7",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F6F2E8",
+  "theme_color": "#D62F6E",
+  "lang": "de",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
