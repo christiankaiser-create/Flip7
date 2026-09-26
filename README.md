@@ -16,5 +16,5 @@ und lässt sich als App auf den Home-Bildschirm legen (PWA, offline-fähig).
 
 ## Hosting
 
-Der Workflow in `.github/workflows/pages.yml` veröffentlicht das Repo bei jedem Push über GitHub Pages.
-Einmalig unter *Settings → Pages → Source* auf **GitHub Actions** stellen.
+GitHub Pages, Quelle „Deploy from a branch“, Branch `claude/flip-7-app-sf97n1`, Ordner `/ (root)`.
+GitHub veröffentlicht dann jeden Push automatisch unter https://christiankaiser-create.github.io/Flip7/
