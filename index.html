@@ -5,12 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Flip 7 Zähler</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;700&display=swap">
 <style>
 :root{
   --bg:#F6F2E8; --paper:#FFFFFF; --ink:#1F1B2E; --muted:#6B6580; --line:#E3DDD0;
-  --accent:#D62F6E; --accent-ink:#FFFFFF; --teal:#1F9E8C; --gold:#E8A317; --bust:#C63A2B;
-  --chip:#F1ECE1; --chip-on:#1F1B2E; --chip-on-ink:#FFFFFF; --bar:#EFE9DC;
+  --accent:#D62F6E; --accent-ink:#FFFFFF; --gold:#E8A317; --bar:#EFE9DC; --field:#F6F2E8;
   --shadow:0 2px 10px rgba(31,27,46,.08);
   --display:"Fredoka","Nunito Sans",system-ui,sans-serif;
   --body:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -19,16 +18,14 @@
   :root:not([data-theme="light"]){
     color-scheme:dark;
     --bg:#123B33; --paper:#1B4A40; --ink:#F4EFE3; --muted:#A9C2B8; --line:#2E6255;
-    --accent:#FF5C97; --accent-ink:#1F1B2E; --teal:#4FD1BB; --gold:#F5C04A; --bust:#FF6B5B;
-    --chip:#244F45; --chip-on:#F4EFE3; --chip-on-ink:#123B33; --bar:#0E2E28;
+    --accent:#FF5C97; --accent-ink:#1F1B2E; --gold:#F5C04A; --bar:#0E2E28; --field:#123B33;
     --shadow:0 2px 12px rgba(0,0,0,.35);
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --bg:#123B33; --paper:#1B4A40; --ink:#F4EFE3; --muted:#A9C2B8; --line:#2E6255;
-  --accent:#FF5C97; --accent-ink:#1F1B2E; --teal:#4FD1BB; --gold:#F5C04A; --bust:#FF6B5B;
-  --chip:#244F45; --chip-on:#F4EFE3; --chip-on-ink:#123B33; --bar:#0E2E28;
+  --accent:#FF5C97; --accent-ink:#1F1B2E; --gold:#F5C04A; --bar:#0E2E28; --field:#123B33;
   --shadow:0 2px 12px rgba(0,0,0,.35);
 }
 *{box-sizing:border-box}
@@ -36,348 +33,182 @@ html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.4;-webkit-tap-highlight-color:transparent}
 button,input{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none;padding:0}
-button:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
-.wrap{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:12px 96px}
-h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
-h1{font-size:28px;font-weight:700;letter-spacing:-.01em}
-h2{font-size:18px;font-weight:600}
-.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
-.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-.top .logo{display:flex;align-items:center;gap:10px}
-.mark{width:36px;height:44px;border-radius:6px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:22px;transform:rotate(-6deg);box-shadow:var(--shadow)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:12px 96px}
+h1,h2{font-family:var(--display);margin:0;text-wrap:balance}
+h1{font-size:26px;font-weight:700}
+h2{font-size:20px;font-weight:600}
 .sub{font-size:13px;color:var(--muted)}
-.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--bar);padding:4px;border-radius:12px;margin-bottom:14px}
-.tabs button{padding:9px 4px;border-radius:9px;font-family:var(--display);font-weight:600;font-size:15px;color:var(--muted)}
-.tabs button[aria-selected="true"]{background:var(--paper);color:var(--ink);box-shadow:var(--shadow)}
-.card{background:var(--paper);border-radius:14px;box-shadow:var(--shadow);padding:14px}
-.stack{display:grid;gap:10px}
-.row{display:flex;align-items:center;gap:10px}
-.grow{flex:1;min-width:0}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.logo{display:flex;align-items:center;gap:10px}
+.mark{width:34px;height:42px;border-radius:6px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:21px;transform:rotate(-6deg);box-shadow:var(--shadow)}
 .num{font-variant-numeric:tabular-nums}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 16px;border-radius:11px;font-family:var(--display);font-weight:600;font-size:16px;background:var(--chip);color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:11px;font-family:var(--display);font-weight:600;font-size:16px;background:var(--bar);color:var(--ink)}
 .btn.primary{background:var(--accent);color:var(--accent-ink)}
 .btn.ghost{background:transparent;border:1.5px solid var(--line)}
-.btn.danger{color:var(--bust)}
 .btn.small{padding:7px 12px;font-size:14px;border-radius:9px}
-.btn:disabled{opacity:.45;cursor:default}
 .btn.block{width:100%}
-input[type="text"],input[type="number"]{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
-input[type="number"]{width:88px;text-align:right}
-/* setup */
-.plist{display:grid;gap:8px}
-.plist .row .idx{width:26px;color:var(--muted);font-weight:700;text-align:right}
-.iconbtn{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--chip);color:var(--muted);font-weight:700}
-/* standings */
-.stand{display:grid;gap:8px}
-.st{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--paper);box-shadow:var(--shadow)}
-.st .rank{font-family:var(--display);font-weight:700;color:var(--muted);text-align:center}
-.st.lead .rank{color:var(--gold)}
-.st .name{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.st .bar{height:6px;border-radius:3px;background:var(--bar);margin-top:6px;overflow:hidden}
-.st .bar i{display:block;height:100%;background:var(--teal);border-radius:3px}
-.st.lead .bar i{background:var(--gold)}
-.st .tot{font-family:var(--display);font-weight:700;font-size:22px}
-.st .last{font-size:12px;color:var(--muted);text-align:right}
-/* round entry */
-.pe{background:var(--paper);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
-.pe .head{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:12px 14px;text-align:left}
-.pe .head .name{font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.pe .head .info{font-size:12px;color:var(--muted);margin-top:2px}
-.pe .head .pts{font-family:var(--display);font-weight:700;font-size:24px;min-width:44px;text-align:right}
-.pe .pts.bust{color:var(--bust)}
-.pe .pts.none{color:var(--muted);font-weight:500}
-.pe .body{padding:4px 14px 14px;border-top:1px solid var(--line);display:grid;gap:12px}
-.pe[data-open="false"] .body{display:none}
-.dealer{font-size:11px;font-weight:700;color:var(--accent);border:1.5px solid var(--accent);border-radius:99px;padding:1px 7px;text-transform:uppercase;letter-spacing:.06em}
-.tag{font-size:11px;font-weight:700;border-radius:99px;padding:2px 8px;background:var(--gold);color:#1F1B2E}
-.tag.bust{background:var(--bust);color:#fff}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{min-width:44px;height:44px;padding:0 10px;border-radius:9px;background:var(--chip);font-family:var(--display);font-weight:600;font-size:17px;display:grid;place-items:center;border:2px solid transparent;transition:transform .08s}
-.chip:active{transform:scale(.94)}
-.chip.on{background:var(--chip-on);color:var(--chip-on-ink)}
-.chip.mod.on{background:var(--teal);color:#0E2E28}
-.chip.x2.on{background:var(--accent);color:var(--accent-ink)}
-.chip.bustbtn{color:var(--bust);border-color:var(--bust)}
-.chip.bustbtn.on{background:var(--bust);color:#fff}
-.lbl{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}
-.calc{font-size:13px;color:var(--muted)}
+.btn:disabled{opacity:.45;cursor:default}
+.list{display:grid;gap:8px}
+.p{display:grid;grid-template-columns:24px 1fr auto auto;gap:10px;align-items:center;padding:10px 12px;background:var(--paper);border-radius:12px;box-shadow:var(--shadow)}
+.p .rank{font-family:var(--display);font-weight:700;color:var(--muted);text-align:center}
+.p.lead .rank{color:var(--gold)}
+.p .name{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.p .tot{font-family:var(--display);font-weight:700;font-size:24px;min-width:48px;text-align:right}
+.p input{width:74px;padding:9px 8px;border-radius:9px;border:1.5px solid var(--line);background:var(--field);text-align:center;font-family:var(--display);font-weight:600;font-size:18px}
+.p input::placeholder{color:var(--muted);font-weight:400}
 .foot{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line);z-index:6}
-.foot .in{max-width:640px;margin:0 auto;display:flex;gap:8px}
+.foot .in{max-width:560px;margin:0 auto;display:flex;gap:8px}
 .foot .btn{flex:1}
-/* history */
+.banner{background:var(--accent);color:var(--accent-ink);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.banner .sub{color:inherit;opacity:.85}
+.sec{margin-top:22px;display:grid;gap:10px}
+.sec .hd{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .hist{overflow-x:auto;border-radius:12px;background:var(--paper);box-shadow:var(--shadow)}
 table{border-collapse:collapse;min-width:100%;font-size:14px}
-th,td{padding:8px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
+th,td{padding:7px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
 th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--paper);font-weight:700}
 thead th{font-family:var(--display);font-weight:600;color:var(--muted);font-size:13px}
-td.b{color:var(--bust)}
-td.f{color:var(--gold);font-weight:700}
-tfoot td{font-weight:700;border-bottom:0}
-.banner{background:var(--accent);color:var(--accent-ink);border-radius:14px;padding:14px 16px;display:grid;gap:4px}
-.banner h2{font-size:22px}
-.empty{color:var(--muted);text-align:center;padding:24px 8px}
-.confirm{display:grid;gap:8px;padding:12px;border-radius:12px;border:1.5px dashed var(--bust)}
+tr:last-child td{border-bottom:0}
+.empty{color:var(--muted);text-align:center;padding:16px 8px}
+/* setup */
+.plist{display:grid;gap:8px}
+.plist .row{display:flex;gap:8px;align-items:center}
+.plist input[type="text"]{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--field)}
+.x{width:38px;height:38px;border-radius:10px;background:var(--bar);color:var(--muted);font-weight:700;display:grid;place-items:center}
+.card{background:var(--paper);border-radius:14px;box-shadow:var(--shadow);padding:14px;display:grid;gap:12px}
+.row{display:flex;align-items:center;gap:10px}
+.grow{flex:1}
+.tgt{width:80px;padding:8px;border-radius:9px;border:1.5px solid var(--line);background:var(--field);text-align:center}
+.confirm{display:grid;gap:8px;padding:12px;border-radius:12px;border:1.5px dashed var(--accent)}
 [hidden]{display:none!important}
-@media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
-    <div class="logo">
-      <div class="mark">7</div>
-      <div><h1>Flip 7</h1><div class="sub" id="subline">Punkte-Zähler</div></div>
-    </div>
+    <div class="logo"><div class="mark">7</div><div><h1>Flip 7</h1><div class="sub" id="subline"></div></div></div>
     <button class="btn small ghost" id="btnSetup" type="button">Spieler</button>
   </div>
 
-  <div class="tabs" role="tablist" id="tabs">
-    <button type="button" role="tab" data-tab="round" aria-selected="true">Runde</button>
-    <button type="button" role="tab" data-tab="table" aria-selected="false">Tabelle</button>
-    <button type="button" role="tab" data-tab="history" aria-selected="false">Verlauf</button>
-  </div>
-
-  <!-- SETUP -->
   <section id="view-setup" hidden>
-    <div class="card stack">
-      <div>
-        <h2>Wer spielt mit?</h2>
-        <div class="sub">Reihenfolge = Sitzreihenfolge. Der Geber wechselt jede Runde im Uhrzeigersinn.</div>
-      </div>
+    <div class="card">
+      <div><h2>Wer spielt mit?</h2><div class="sub">Namen eintragen, dann los.</div></div>
       <div class="plist" id="plist"></div>
       <div class="row">
-        <button class="btn small" id="btnAddPlayer" type="button">+ Spieler</button>
+        <button class="btn small" id="btnAdd" type="button">+ Spieler</button>
         <div class="grow"></div>
-        <label class="row" style="gap:6px"><span class="sub">Ziel</span><input type="number" id="target" min="50" step="10" value="200"></label>
+        <label class="row" style="gap:6px"><span class="sub">Ziel</span><input class="tgt num" type="number" id="target" min="10" step="10"></label>
       </div>
       <button class="btn primary block" id="btnStart" type="button">Los geht's</button>
-      <div id="setupNote" class="sub" hidden>Änderungen an den Namen gelten sofort. Neue Spieler starten mit 0 Punkten.</div>
     </div>
   </section>
 
-  <!-- ROUND -->
-  <section id="view-round">
-    <div id="winner" hidden></div>
-    <div class="row" style="margin-bottom:8px">
-      <div class="grow"><span class="eyebrow">Runde <span id="roundNo">1</span></span><div class="sub" id="dealerLine"></div></div>
-      <button class="btn small ghost" id="btnClearRound" type="button">Leeren</button>
-    </div>
-    <div class="stack" id="entries"></div>
-  </section>
+  <section id="view-game">
+    <div class="banner" id="winner" hidden></div>
+    <div class="list" id="list"></div>
 
-  <!-- TABLE -->
-  <section id="view-table" hidden>
-    <div class="stand" id="standings"></div>
-  </section>
-
-  <!-- HISTORY -->
-  <section id="view-history" hidden>
-    <div class="hist" id="history"></div>
-    <div class="stack" style="margin-top:12px">
-      <button class="btn ghost block" id="btnUndo" type="button">Letzte Runde zurücknehmen</button>
-      <button class="btn ghost block danger" id="btnReset" type="button">Neues Spiel (alles löschen)</button>
+    <div class="sec">
+      <div class="hd"><h2>Verlauf</h2><button class="btn small ghost" id="btnUndo" type="button">Letzte Runde zurück</button></div>
+      <div class="hist" id="history"></div>
+      <button class="btn ghost block" id="btnReset" type="button">Neues Spiel</button>
       <div class="confirm" id="resetConfirm" hidden>
-        <div>Wirklich alles löschen? Spieler bleiben erhalten, Punkte werden auf 0 gesetzt.</div>
-        <div class="row"><button class="btn small danger" id="btnResetYes" type="button">Ja, löschen</button><button class="btn small" id="btnResetNo" type="button">Abbrechen</button></div>
+        <div>Alle Punkte auf 0 setzen? Die Spieler bleiben.</div>
+        <div class="row"><button class="btn small primary" id="btnResetYes" type="button">Ja</button><button class="btn small" id="btnResetNo" type="button">Abbrechen</button></div>
       </div>
     </div>
   </section>
 </div>
 
 <div class="foot" id="foot">
-  <div class="in">
-    <button class="btn primary" id="btnFinish" type="button">Runde abschließen</button>
-  </div>
+  <div class="in"><button class="btn primary" id="btnFinish" type="button">Runde eintragen</button></div>
 </div>
 
 <script>
 (function(){
-  const KEY='flip7-v1';
-  const NUMBERS=[0,1,2,3,4,5,6,7,8,9,10,11,12];
-  const MODS=[2,4,6,8,10];
+  const KEY='flip7-simple-v1';
   const DEFAULT_NAMES=['Anna','Ben','Clara','David','Eva','Felix','Greta','Hannes','Ida','Jonas'];
+  let S=load(); let setupOpen=false;
 
-  let S=load();
-  let open=null;      // id of expanded entry
-  let tab='round';
-  let setupOpen=!S.players.length;
-
-  function blank(){ return {cards:[],mods:[],x2:false,bust:false,manual:null}; }
-  function load(){
-    try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.players) return s; }catch(e){}
-    return {players:[],rounds:[],current:{},target:200,nextId:1};
-  }
+  function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.players) return s; }catch(e){} return {players:[],rounds:[],draft:{},target:200,nextId:1}; }
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
-
-  function score(e){
-    if(!e) return 0;
-    if(e.manual!==null&&e.manual!==undefined&&e.manual!=='') return Number(e.manual)||0;
-    if(e.bust) return 0;
-    let n=e.cards.reduce((a,b)=>a+b,0);
-    if(e.x2) n*=2;
-    n+=e.mods.reduce((a,b)=>a+b,0);
-    if(e.cards.length>=7) n+=15;
-    return n;
-  }
-  function isFlip7(e){ return e && !e.bust && (e.manual===null||e.manual===undefined||e.manual==='') && e.cards.length>=7; }
-  function touched(e){ return e && (e.cards.length||e.mods.length||e.x2||e.bust||(e.manual!==null&&e.manual!==undefined&&e.manual!=='')); }
-  function total(pid){ return S.rounds.reduce((a,r)=>a+score(r[pid]),0); }
-  function entry(pid){ if(!S.current[pid]) S.current[pid]=blank(); return S.current[pid]; }
-  function dealerIdx(){ return S.players.length? S.rounds.length % S.players.length : 0; }
-  function leaders(){
-    const t=S.players.map(p=>({p,t:total(p.id)})).sort((a,b)=>b.t-a.t);
-    if(!t.length||t[0].t<S.target) return null;
-    return t.filter(x=>x.t===t[0].t).map(x=>x.p);
-  }
-
-  /* ---------- render ---------- */
   const $=id=>document.getElementById(id);
+  const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const total=pid=>S.rounds.reduce((a,r)=>a+(Number(r[pid])||0),0);
+  function winners(){
+    const rows=S.players.map(p=>({p,t:total(p.id)})).sort((a,b)=>b.t-a.t);
+    if(!rows.length||rows[0].t<S.target) return null;
+    return rows.filter(r=>r.t===rows[0].t);
+  }
+
   function render(){
-    const win=leaders();
-    $('view-setup').hidden=!setupOpen;
-    $('tabs').hidden=setupOpen;
-    $('foot').hidden=setupOpen||tab!=='round';
-    ['round','table','history'].forEach(t=>{ $('view-'+t).hidden=setupOpen||tab!==t; });
-    document.querySelectorAll('#tabs [role=tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));
-    $('subline').textContent=S.players.length? `${S.players.length} Spieler · Ziel ${S.target}` : 'Punkte-Zähler';
+    $('view-setup').hidden=!setupOpen; $('view-game').hidden=setupOpen; $('foot').hidden=setupOpen;
     $('btnSetup').textContent=setupOpen?'Zurück':'Spieler';
-    if(setupOpen) renderSetup();
-    else { renderRound(win); renderStandings(); renderHistory(); }
+    $('subline').textContent=`${S.players.length} Spieler · Ziel ${S.target}`;
+    if(setupOpen){ renderSetup(); return; }
+    renderList(); renderHistory();
   }
 
   function renderSetup(){
     const list=$('plist'); list.innerHTML='';
-    S.players.forEach((p,i)=>{
+    S.players.forEach(p=>{
       const row=document.createElement('div'); row.className='row';
-      row.innerHTML=`<span class="idx num">${i+1}</span><input type="text" id="pn-${p.id}" value="" placeholder="Name" autocomplete="off"><button class="iconbtn" type="button" aria-label="Entfernen" data-del="${p.id}">✕</button>`;
-      row.querySelector('input').value=p.name;
-      row.querySelector('input').addEventListener('input',ev=>{ p.name=ev.target.value; save(); });
-      row.querySelector('[data-del]').addEventListener('click',()=>{ S.players=S.players.filter(x=>x.id!==p.id); delete S.current[p.id]; save(); render(); });
+      row.innerHTML=`<input type="text" id="pn-${p.id}" placeholder="Name" autocomplete="off"><button class="x" type="button" aria-label="Entfernen">✕</button>`;
+      const inp=row.querySelector('input'); inp.value=p.name;
+      inp.addEventListener('input',()=>{ p.name=inp.value; save(); });
+      row.querySelector('.x').addEventListener('click',()=>{ S.players=S.players.filter(x=>x.id!==p.id); delete S.draft[p.id]; save(); render(); });
       list.appendChild(row);
     });
     $('target').value=S.target;
-    $('btnStart').textContent=S.rounds.length?'Weiter spielen':"Los geht's";
     $('btnStart').disabled=S.players.length<2;
-    $('setupNote').hidden=!S.rounds.length;
+    $('btnStart').textContent=S.rounds.length?'Weiter':"Los geht's";
   }
 
-  function renderRound(win){
-    $('roundNo').textContent=S.rounds.length+1;
-    const d=S.players[dealerIdx()];
-    $('dealerLine').textContent=d?`Geber: ${d.name||'Spieler '+(dealerIdx()+1)}`:'';
-    const w=$('winner');
-    if(win){
-      w.hidden=false;
-      w.className='banner'; w.style.marginBottom='12px';
-      const names=win.map(p=>p.name).join(' & ');
-      w.innerHTML=`<span class="eyebrow" style="color:inherit;opacity:.8">Spielende</span><h2>${esc(names)} gewinnt mit ${total(win[0].id)} Punkten</h2><div>Ziel ${S.target} erreicht nach ${S.rounds.length} Runden. Zum Weiterspielen einfach die nächste Runde eintragen.</div>`;
-    } else { w.hidden=true; }
+  function renderList(){
+    const w=winners(); const b=$('winner');
+    if(w){ b.hidden=false; b.innerHTML=`<div class="sub">Spielende nach ${S.rounds.length} Runden</div><h2>${esc(w.map(x=>x.p.name).join(' & '))} gewinnt mit ${w[0].t} Punkten</h2>`; }
+    else b.hidden=true;
 
-    const box=$('entries'); box.innerHTML='';
-    S.players.forEach((p,i)=>{
-      const e=entry(p.id); const pts=score(e); const isOpen=open===p.id;
-      const el=document.createElement('div'); el.className='pe'; el.dataset.open=String(isOpen);
-      const info=describe(e);
-      el.innerHTML=`
-        <button class="head" type="button" aria-expanded="${isOpen}">
-          <div class="grow"><div class="name">${esc(p.name||'Spieler '+(i+1))}${i===dealerIdx()?'<span class="dealer">Geber</span>':''}${isFlip7(e)?'<span class="tag">Flip 7 +15</span>':''}${e.bust&&!hasManual(e)?'<span class="tag bust">Bust</span>':''}</div><div class="info">${info}</div></div>
-          <div class="pts num ${e.bust&&!hasManual(e)?'bust':''} ${touched(e)?'':'none'}">${touched(e)?pts:'–'}</div>
-        </button>
-        <div class="body">
-          <div><div class="lbl">Zahlenkarten</div><div class="chips" data-k="cards">${NUMBERS.map(n=>`<button type="button" class="chip ${e.cards.includes(n)?'on':''}" data-n="${n}">${n}</button>`).join('')}</div></div>
-          <div><div class="lbl">Bonuskarten</div><div class="chips" data-k="mods">${MODS.map(m=>`<button type="button" class="chip mod ${e.mods.includes(m)?'on':''}" data-m="${m}">+${m}</button>`).join('')}<button type="button" class="chip x2 ${e.x2?'on':''}" data-x2>×2</button><button type="button" class="chip bustbtn ${e.bust?'on':''}" data-bust>Bust</button></div></div>
-          <div class="row"><div class="grow calc" id="calc-${p.id}">${calcText(e)}</div><label class="row" style="gap:6px"><span class="sub">Manuell</span><input type="number" id="man-${p.id}" inputmode="numeric" placeholder="–" value="${e.manual??''}"></label></div>
-        </div>`;
-      el.querySelector('.head').addEventListener('click',()=>{ open=isOpen?null:p.id; render(); if(!isOpen) el.scrollIntoView({block:'nearest'}); });
-      el.querySelectorAll('[data-n]').forEach(b=>b.addEventListener('click',()=>{ const n=+b.dataset.n; const k=e.cards.indexOf(n); if(k>=0) e.cards.splice(k,1); else e.cards.push(n); e.bust=false; save(); render(); }));
-      el.querySelectorAll('[data-m]').forEach(b=>b.addEventListener('click',()=>{ const m=+b.dataset.m; const k=e.mods.indexOf(m); if(k>=0) e.mods.splice(k,1); else e.mods.push(m); save(); render(); }));
-      el.querySelector('[data-x2]').addEventListener('click',()=>{ e.x2=!e.x2; save(); render(); });
-      el.querySelector('[data-bust]').addEventListener('click',()=>{ e.bust=!e.bust; save(); render(); });
-      el.querySelector(`#man-${p.id}`).addEventListener('input',ev=>{ e.manual=ev.target.value===''?null:Number(ev.target.value); save(); renderHeadOnly(el,p,i,e); });
-      box.appendChild(el);
-    });
-    $('btnFinish').disabled=!S.players.some(p=>touched(S.current[p.id]));
-  }
-  function hasManual(e){ return e.manual!==null&&e.manual!==undefined&&e.manual!==''; }
-  function renderHeadOnly(el,p,i,e){
-    el.querySelector('.pts').textContent=touched(e)?score(e):'–';
-    el.querySelector('.pts').className='pts num '+(e.bust&&!hasManual(e)?'bust':'')+(touched(e)?'':' none');
-    el.querySelector('.info').textContent=describe(e).replace(/<[^>]+>/g,'');
-    $('btnFinish').disabled=!S.players.some(q=>touched(S.current[q.id]));
-  }
-  function describe(e){
-    if(hasManual(e)) return 'manuell eingetragen';
-    if(e.bust) return 'ausgeschieden, 0 Punkte';
-    if(!touched(e)) return 'tippen zum Eintragen';
-    const parts=[];
-    if(e.cards.length) parts.push([...e.cards].sort((a,b)=>a-b).join(' '));
-    if(e.x2) parts.push('×2');
-    if(e.mods.length) parts.push(e.mods.map(m=>'+'+m).join(' '));
-    return esc(parts.join(' · '))||'–';
-  }
-  function calcText(e){
-    if(hasManual(e)) return 'Manueller Wert überschreibt die Karten.';
-    if(e.bust) return 'Bust: alle Punkte dieser Runde verfallen.';
-    const base=e.cards.reduce((a,b)=>a+b,0);
-    const bits=[`Karten ${base}`];
-    if(e.x2) bits.push(`×2 = ${base*2}`);
-    if(e.mods.length) bits.push(`+${e.mods.reduce((a,b)=>a+b,0)}`);
-    if(e.cards.length>=7) bits.push('+15 Flip 7');
-    return bits.join(' ')+` → ${score(e)} Punkte`;
-  }
-
-  function renderStandings(){
-    const box=$('standings'); box.innerHTML='';
-    const rows=S.players.map(p=>({p,t:total(p.id),last:S.rounds.length?score(S.rounds[S.rounds.length-1][p.id]):null}));
-    rows.sort((a,b)=>b.t-a.t);
-    if(!rows.length){ box.innerHTML='<div class="empty">Noch keine Spieler.</div>'; return; }
-    const top=rows[0].t;
+    const rows=S.players.map(p=>({p,t:total(p.id)})).sort((a,b)=>b.t-a.t);
+    const top=rows.length?rows[0].t:0;
+    const list=$('list'); list.innerHTML='';
+    if(!rows.length){ list.innerHTML='<div class="empty">Noch keine Spieler. Oben auf „Spieler“ tippen.</div>'; }
     rows.forEach((r,i)=>{
-      const rank=i>0&&rows[i-1].t===r.t?rows.findIndex(x=>x.t===r.t)+1:i+1;
-      const el=document.createElement('div'); el.className='st'+(r.t===top&&top>0?' lead':'');
-      const pct=Math.min(100,Math.round(100*r.t/S.target));
-      el.innerHTML=`<div class="rank num">${rank}</div><div class="grow"><div class="name">${esc(r.p.name)}</div><div class="bar"><i style="width:${pct}%"></i></div></div><div><div class="tot num">${r.t}</div><div class="last num">${r.last===null?'':'letzte: '+r.last}</div></div>`;
-      box.appendChild(el);
+      const rank=rows.findIndex(x=>x.t===r.t)+1;
+      const el=document.createElement('div'); el.className='p'+(r.t===top&&top>0?' lead':'');
+      el.innerHTML=`<div class="rank num">${rank}</div><div class="name">${esc(r.p.name)}</div><div class="tot num">${r.t}</div><input type="number" inputmode="numeric" id="in-${r.p.id}" placeholder="+" min="0">`;
+      const inp=el.querySelector('input'); inp.value=S.draft[r.p.id]??'';
+      inp.addEventListener('input',()=>{ S.draft[r.p.id]=inp.value; save(); $('btnFinish').disabled=!anyDraft(); });
+      inp.addEventListener('keydown',ev=>{ if(ev.key==='Enter'){ const all=[...list.querySelectorAll('input')]; const k=all.indexOf(inp); if(k<all.length-1) all[k+1].focus(); else inp.blur(); } });
+      list.appendChild(el);
     });
+    $('btnFinish').disabled=!anyDraft();
   }
+  const anyDraft=()=>S.players.some(p=>S.draft[p.id]!==undefined&&S.draft[p.id]!=='');
 
   function renderHistory(){
-    const box=$('history');
-    if(!S.rounds.length){ box.innerHTML='<div class="empty">Noch keine abgeschlossene Runde.</div>'; $('btnUndo').disabled=true; return; }
-    $('btnUndo').disabled=false;
-    let h='<table><thead><tr><th>Spieler</th>'+S.rounds.map((_,i)=>`<th class="num">R${i+1}</th>`).join('')+'<th>Σ</th></tr></thead><tbody>';
-    S.players.forEach(p=>{
-      h+=`<tr><td>${esc(p.name)}</td>`+S.rounds.map(r=>{ const e=r[p.id]; const cls=e&&e.bust&&!hasManual(e)?'b':(isFlip7(e)?'f':''); return `<td class="num ${cls}">${e?score(e):0}</td>`; }).join('')+`<td class="num"><b>${total(p.id)}</b></td></tr>`;
-    });
-    h+='</tbody></table>';
-    box.innerHTML=h;
+    const box=$('history'); $('btnUndo').disabled=!S.rounds.length;
+    if(!S.rounds.length){ box.innerHTML='<div class="empty">Noch keine Runde eingetragen.</div>'; return; }
+    let h='<table><thead><tr><th>Spieler</th>'+S.rounds.map((_,i)=>`<th class="num">${i+1}</th>`).join('')+'<th>Σ</th></tr></thead><tbody>';
+    S.players.forEach(p=>{ h+=`<tr><td>${esc(p.name)}</td>`+S.rounds.map(r=>`<td class="num">${Number(r[p.id])||0}</td>`).join('')+`<td class="num"><b>${total(p.id)}</b></td></tr>`; });
+    box.innerHTML=h+'</tbody></table>';
   }
 
-  function esc(s){ return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-
-  /* ---------- actions ---------- */
-  $('btnSetup').addEventListener('click',()=>{ setupOpen=!setupOpen; if(setupOpen&&!S.players.length) addPlayers(10); render(); });
-  $('btnAddPlayer').addEventListener('click',()=>{ addPlayers(1); render(); const inp=document.querySelector('#plist .row:last-child input'); if(inp) inp.focus(); });
+  $('btnSetup').addEventListener('click',()=>{ setupOpen=!setupOpen; render(); });
+  $('btnAdd').addEventListener('click',()=>{ addPlayer(); render(); const last=document.querySelector('#plist .row:last-child input'); if(last) last.focus(); });
   $('target').addEventListener('change',ev=>{ S.target=Math.max(10,Number(ev.target.value)||200); save(); });
-  $('btnStart').addEventListener('click',()=>{ S.players.forEach((p,i)=>{ if(!p.name.trim()) p.name='Spieler '+(i+1); }); setupOpen=false; tab='round'; save(); render(); });
-  document.querySelectorAll('#tabs [role=tab]').forEach(b=>b.addEventListener('click',()=>{ tab=b.dataset.tab; render(); window.scrollTo({top:0}); }));
-  $('btnClearRound').addEventListener('click',()=>{ S.current={}; save(); render(); });
+  $('btnStart').addEventListener('click',()=>{ S.players.forEach((p,i)=>{ if(!p.name.trim()) p.name='Spieler '+(i+1); }); setupOpen=false; save(); render(); });
   $('btnFinish').addEventListener('click',()=>{
-    const r={}; S.players.forEach(p=>{ r[p.id]=entry(p.id); });
-    S.rounds.push(r); S.current={}; open=null; save();
-    tab=leaders()?'table':'round'; render(); window.scrollTo({top:0});
+    const r={}; S.players.forEach(p=>{ r[p.id]=Number(S.draft[p.id])||0; });
+    S.rounds.push(r); S.draft={}; save(); render(); window.scrollTo({top:0});
   });
-  $('btnUndo').addEventListener('click',()=>{ const r=S.rounds.pop(); if(r){ S.current=r; open=null; save(); tab='round'; render(); } });
+  $('btnUndo').addEventListener('click',()=>{ const r=S.rounds.pop(); if(r){ S.draft={}; S.players.forEach(p=>{ S.draft[p.id]=String(r[p.id]??''); }); save(); render(); } });
   $('btnReset').addEventListener('click',()=>{ $('resetConfirm').hidden=false; });
   $('btnResetNo').addEventListener('click',()=>{ $('resetConfirm').hidden=true; });
-  $('btnResetYes').addEventListener('click',()=>{ S.rounds=[]; S.current={}; open=null; save(); $('resetConfirm').hidden=true; tab='round'; render(); });
+  $('btnResetYes').addEventListener('click',()=>{ S.rounds=[]; S.draft={}; save(); $('resetConfirm').hidden=true; render(); });
 
-  function addPlayers(n){
-    for(let i=0;i<n;i++){ const idx=S.players.length; S.players.push({id:S.nextId++,name:DEFAULT_NAMES[idx]||''}); }
-    save();
-  }
-
-  if(!S.players.length){ addPlayers(10); setupOpen=true; }
+  function addPlayer(){ const i=S.players.length; S.players.push({id:S.nextId++,name:DEFAULT_NAMES[i]||''}); save(); }
+  if(!S.players.length){ for(let i=0;i<10;i++) addPlayer(); setupOpen=true; }
   render();
 })();
 </script>
